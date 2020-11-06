@@ -1,0 +1,9 @@
+body {  text-align: center;}
+h1 { text-align: center; color: #F00;}
+#main { width: 750px; border: #f00 solid 1px; background: #fff; display: inline-lock; margin: 0 auto;}
+.le { background: #ccc; }
+.tieude { background: #FFA31B; font-weight: bold; }
+tr:hover { background: #3879D9; }
+img{
+  width:200px;
+}

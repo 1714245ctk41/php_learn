@@ -1,0 +1,10 @@
+body {  text-align: center;}
+h1 { text-align: center; color: #F00;}
+#main { width: 750px; border: #f00 solid 1px; background: #fff; display: inline-block; margin: 0 auto;}
+.khung { width: 200px; height: 300px; border: #999 solid 1px; padding: 10px; margin: 10px; float: left;
+}
+img.cangiua {  display: block; margin-left: auto; margin-right: auto; }
+.khung img { width: 150px;}
+.tenmon { text-align: center; font-weight: bold;}
+.gia {    color: #D98A17;}
+.le { background: #ccc; }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.wrap{
+			border:1px solid gray;
+			width:500px;
+
+			margin:10px auto;
+			display:flex;
+			flex-wrap: wrap;
+			text-align:center;
+
+		}
+		div{
+			margin-top:10px;
+			flex:100%;
+			height:20%;
+		}
+		div:last-child{
+			height:60%;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap" >
+		<div><h1>Bạn thuộc chòm sao gì</h1></div>
+		<div>
+			<span>Ngày sinh</span>
+			<input type="text" name="ngaysinh">
+		</div>
+		<div>
+			<span>Tháng sinh</span>
+			<input type="text" name="thangsinh">
+		</div>
+		<div><button type="submit" name="submit">Lấy chòm sao!</button></div>
+		<div>
+			<p name="result"></p>
+		</div>
+	</div>
+</body>
+</html>

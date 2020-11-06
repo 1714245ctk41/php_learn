@@ -1,0 +1,65 @@
+cú pháp:
+	update <ten_bang>
+	set ten_field = gia_tri, ten_field2 = gia_tri2
+	where dieu_kien
+
+1. Hãy cập nhật lại đơn giá cho món ăn có tên là Gà quay, giá mới là 60000 VNĐ.
+	update mon_an
+	set don_gia = 60000
+	where ten_mon = "Gà quay"
+
+2. Hãy cập nhật lại đơn giá cho từng thực đơn là số tiền của các món ăn trong bảng mon_an
+	update thuc_don td
+	set don_gia = (select sum(so_luong*don_gia) as ThanhTien
+				from thuc_don_mon_an tdma inner join mon_an ma on tdma.ma_mon = ma.ma_mon
+				where ma_thuc_don = td.ma_thuc_don order by 1)
+
+3. giảm 5% đơn giá cho hóa đơn có số hóa đơn là 2
+	update hoa_don
+	set tong_tien = tong_tien * 0.95
+	where ma_hoa_don = 2
+
+4. Tạo thêm cột gia_tri cho bảng hoa_don, sau đó tính giá trị cho mỗi hóa đơn 
+và cập nhật cho cột giá trị của bảng này.
+	update hoa_don hd
+	set tri_gia = (select sum(so_luong * don_gia) from chi_tiet_hoa_don 
+	where ma_hoa_don = hd.ma_hoa_don)
+
+delete from <ten_bang>
+where dieu_kien
+1. Xóa khách hàng có mã khách hàng là 5 trong bảng khach_hang
+	delete from khach_hang where ma_khach_hang=5
+
+2.Xóa các món ăn có loại món ăn là "Cơm"
+	delete from m.* from mon_an m inner join loai_mon_an l on m.ma_mon = l.ma_mon 
+	where l.ten_loai = "Cơm"
+
+3. Xóa những món ăn có đơn giá nhỏ hơn 50000
+	delete from m.* from mon_an where don_gia < 50000
+
+4. Xóa những thực đơn chưa có món ăn nào
+	delete from td.* where ma_thuc_don not in (select ma_thuc_don from thuc_don_mon_an)
+
+5. Xóa những khách hàng không có hóa đơn
+	delete from khach_hang where ma_khach_hang not in (select ma_khach_hang from hoa_don)
+
+INSERT INTO <ten_bang> SELECT danh_sach_field from <bang> [WHERE GROUP BY]; danh_sach_field
+ phải tương ứng với các field của ten_bang
+
+1.Thêm thực đơn mới, thông tin gồm:
+	Tên thực đơn: Thực đơn 13
+	Đơn giá: 0
+	Nội dung: Súp cua, lẩu thái, tôm nướng, gà quay
+	Hình: thuc-don13.jpg
+	insert into thuc_don values("NULL", "Thực đơn 13", 0, 0, "Súp cua, lẩu thái, tôm nướng, 
+		gà quay", "thuc-don13.jpg")
+
+2. Thêm tất cả hóa đơn được lập trong tháng 1 năm 2017 từ bảng hoa_don vào hoa_don_backup
+	insert into hoa_don_backup
+	select * from hoa_don where MONTH(ngay_dat) = 1 and YEAR(ngay_dat) = 2017
+
+3. Thêm năm món ăn mới vào bảng mon_an
+	insert into mon_an
+	VALUES(‘ma_mon’, ‘ma_loai’, ‘ten_mon’, ‘noi_dung_tom_tat’, ‘noi_dung_chi_tiet’,
+	 ‘don_gia’, ‘don_gia_khuyen_mai’, ‘khuyen_mai’, ‘hinh’, ‘ngay_cap_nhat’, ‘dvt’,
+	 ‘trong_ngay’)
