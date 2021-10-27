@@ -1,0 +1,41 @@
+1. select ten_loai, count(ma_mon) TongsoMon
+	from loai_mon_an loai inner join mon_an mon on loai.ma_loai = mon.ma_loai
+	group by ten_loai
+
+2. sắp tăng theo tổng số sản phẩm(TongSoMon):
+	select ten_loai, count(ma_mon) TongSoMon
+	from loai_mon_an loai inner join mon_an mon on loai.ma_loai = mon.ma_loai
+	group by ten_loai
+	order by TongSoMon
+	(hoặc group by theo cột số 2: order by 2)
+3. Cho biết đơn giá trung bình của món ăn theo từng Loại món ăn
+	select loai.ma_loai, ten_loai, ROUND(AVG(don_gia), 1) DonGiaTrungBinh
+	from loai_mon_an loai inner join mon_an mon on loai.ma_loai = mon.ma_loai
+	group by loai.ma_loai, ten_loai
+
+4. cho biết món ăn có đơn giá thấp nhất theo từng loại món ăn
+	select loai.ma_loai, ten_loai, MIN(don_gia) DonGiaThapNhat
+	from loai_mon_an loai inner join mon_an mon on loai.ma_loai = mon.ma_loai
+	group by loai.ma_loai, ten_loai
+
+5. cao nhất
+	select loai.ma_loai, ten_loai, MAX(don_gia) DonGiaCaoNhat
+	from loai_mon_an loai inner join mon_an mon on loai.ma_loai = mon.ma_loai
+	group by loai.ma_loai, ten_loai
+
+6. Thống kê hóa đơn gồm các thông tin sau: số hóa đơn, ngày đặt, tổng số món ăn, tổng thành tiền
+	select hd.ma_hoa_don, ngay_dat, count(ma_mon) as TongMon, sum(so_luong*don_gia) TongThanhTien
+	from hoa_don hd innder join chi_tiet_hoa_don cthd on hd.ma_hoa_don= cthd.ma_hoa_don
+	group by hd.ma_hoa_don, ngay_dat
+
+7. thêm điều kiện cho câu 6 là hóa đơn có số món từ 2 trở lên
+	select hd.ma_hoa_don, ngay_dat, count(cthd.ma_mon) TongMon, sum(so_luong*don_gia) TongThanhTien
+	from hoa_don hd inner join chi_tiet_hoa_don cthd on hd.ma_hoa_don = cthd.ma_hoa_don
+	group by hd.ma_hoa_don, ngay_dat
+	having count(ma_mon) >=2
+
+6. Cho biết đơn giá trung bình món ăn thuộc loại món ăn là "bún, mì, miến, phở".
+	select ten_loai, ROUND(AVG(don_gia), 1) as DGTB
+	from loai_mon_an loai,  mon_an mon
+	where loai.ma_loai = mon.ma_loai and ten_loai in ("bún", "mì", "miến", "phở")
+	group by ten_loa

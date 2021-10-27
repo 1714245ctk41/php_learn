@@ -1,0 +1,24 @@
+body{
+  background:#ccc;
+}
+h1{
+  text-align:center;
+  color:#F00;
+}
+#main{
+  width:700px;
+  margin:0 auto;
+  border:#f00 solid 1px;
+  background:#fff;
+}
+.khung{
+  width: 680px;
+  height:200px;
+  border-bottom:#999 solid 1px;
+  padding:10px;
+}
+.khung img{
+  width:250px;
+  float:left;
+  margin-right: 10px;
+}

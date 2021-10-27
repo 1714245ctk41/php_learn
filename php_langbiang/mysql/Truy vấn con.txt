@@ -1,0 +1,38 @@
+1. liệt kê các loại món ăn chưa có món ăn nào
+	select * from loai_mon_an
+	where ma_loai NOT IN (select distinct ma_loai from mon_an)
+
+2. Liệt kê món ăn chưa có khách hàng nào mua
+	select * from mon_an
+	where ma_mon NOT IN (select distinct ma_mon from chi_tiet_hoa_don)
+
+3. Liệt kê món ăn có doanh thu cao nhất
+	select m.ma_mon, ten_mon, sum(so_luong*ct.don_gia) as DoanhThu
+	from mon_an m inner join chi_tiet_hoa_don ct on m.ma_mon = ct.ma_mon
+	group by m.ma_mon, ten_mon
+	having sum(so_luong*ct.don_gia)=(select sum(so_luong*don_gia)
+					from chi_tiet_hoa_don
+					group by ma_mon
+					order by 1 Desc
+					limit 1)
+
+4. select * from thuc_don 
+	where ma_thuc_don NOT IN (select distinct ma_thuc_don from thuc_don_mon_an)
+
+5. Liệt kê các thực đơn chưa có khách hàng mua
+	select * from thuc_don
+	where ma_thuc_don NOT IN (select distinct ma_thuc_don from thuc_don_mon_an
+		where ma_mon IN (select distinct ma_mon from chi_tiet_hoa_don) order by 1)
+
+6. Liệt kê khách hàng chưa đặt món
+ select * from khach_hang
+	where ma_khach_hang NOT IN (select ma_khach_hang from hoa_don)
+
+7. Liệt kê danh sách món ăn có cùng loại món ăn với món ăn có mã món ăn là 4
+	select * from mon_an
+	where ma_loai = (select ma_loai from mon_an where ma_mon = 4)
+
+8. Liệt kê các món ăn có đơn giá cao nhất theo từng loại món ăn
+	select ma_loai, ten_mon, ma_mon, don_gia from mon_an m
+	where don_gia = (select max(don_gia) from mon_an where ma_loai = m.ma_loai)
+	order by 1
